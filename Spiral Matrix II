@@ -1,0 +1,59 @@
+class Solution {
+    public int[][] generateMatrix(int n) {
+        
+        int[][] matrix = new int[n][n];
+        int num=1;
+        int top=0, bottom = n-1;
+        int left =0 , right = n-1;        
+        int direction=0;
+        
+        while(left<=right && top<=bottom){
+            
+            if(direction==0){
+                for(int i=left;i<=right;i++){
+                    matrix[top][i]=num;
+                    num++;
+                }
+                direction=1;
+                top++;
+            } 
+            else if(direction==1){
+                 for(int i=top;i<=bottom;i++){
+                     matrix[i][right]=num;
+                     num++;
+                 }   
+                direction=2;
+                right--;
+            }
+            
+            else if(direction==2){
+                   for(int i=right;i>=left;i--){
+                        matrix[bottom][i]=num;
+                       num++;
+                   } 
+                direction=3;
+                bottom--;
+            }
+            
+             else if(direction==3){
+                for(int i=bottom;i>=top;i--){
+                    matrix[i][left]=num;
+                    num++;
+                }
+                direction=0;
+                left++;
+            }
+        }
+        return matrix;
+    }
+}
+
+//direction=0->left to right
+//dir=1->top to bottom
+//dir=2->right to left
+//dir=3->bottom to top
+
+//         l        r
+//   t    {1, 2, 3, 4}
+//        {5, 6, 7, 8}
+//   b    {9, 0, 45, 12}
