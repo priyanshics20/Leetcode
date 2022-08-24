@@ -2,7 +2,10 @@ class Solution {
     public boolean checkStraightLine(int[][] coordinates) {
         //concept of collinearity - (A,B,C) = slope of AB = BC = CA.
         // slope (m) = (y2 - y1) / (x2-x1)
+        // we will not use this (y2 - y1) / (x2-x1) as it may give 1/0 and program may stuck in loop
         // we have to take care the value of denominator must not be equal to zero as it will give infinite value and our program will stuck
+        // we use formula as (y2 - y1) / (x2-x1) = (y3 - y2) / (x3-x2)
+        // (y2 - y1)(x3-x2) = (y3 - y2)(x2-x1) 
         
         if(coordinates.length==2)
             return true;
