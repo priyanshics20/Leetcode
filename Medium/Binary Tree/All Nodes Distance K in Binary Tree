@@ -1,0 +1,65 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public void markParents(TreeNode root, Map<TreeNode,TreeNode> parent_track){
+        Queue<TreeNode> qu = new LinkedList<>();
+        qu.add(root);
+        while(!qu.isEmpty()){
+            TreeNode curr = qu.poll();
+            if(curr.left!=null){
+                parent_track.put(curr.left,curr);
+                qu.add(curr.left);
+            }
+            if(curr.right!=null){
+                parent_track.put(curr.right,curr);
+                qu.add(curr.right);
+            }
+        }
+    }
+
+    public List<Integer> distanceK(TreeNode root, TreeNode target, int k) {
+        Map<TreeNode,TreeNode> parent_track = new HashMap<>();
+        markParents(root, parent_track);
+        Map<TreeNode ,Boolean> vis = new HashMap<>();
+        Queue<TreeNode> qu = new LinkedList<>();
+        qu.add(target);
+        vis.put(target,true);
+        int curr_level=0;
+        while(!qu.isEmpty()){
+            int size = qu.size();
+            if(curr_level == k)
+                break;
+            curr_level++;
+            for(int i=0;i<size;i++){
+                TreeNode curr = qu.poll();
+                if(curr.left!=null && vis.get(curr.left)==null){
+                    qu.offer(curr.left);
+                    vis.put(curr.left,true);
+                }
+
+                if(curr.right!=null && vis.get(curr.right) ==null){
+                    qu.offer(curr.right);
+                    vis.put(curr.right,true);
+                }
+
+                if(parent_track.get(curr)!=null && vis.get(parent_track.get(curr)) ==null){
+                    qu.offer(parent_track.get(curr));
+                    vis.put(parent_track.get(curr),true);
+                }
+            }
+        }
+        List<Integer> al = new ArrayList<>();
+        while(!qu.isEmpty()){
+            TreeNode curr = qu.poll();
+            al.add(curr.val);
+        }
+        return al;
+    }
+}
