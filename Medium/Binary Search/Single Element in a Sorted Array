@@ -1,0 +1,19 @@
+//Linear Approach, TC - O(N)
+//brute force 
+//When we xor of same number gives 0 so only 1 elements which is not repeated will remain 
+class Solution {
+    public int singleNonDuplicate(int[] nums) {
+        int xor=0;
+        for(int i=0;i<nums.length;i++){
+            xor ^= nums[i];
+        }
+        return xor;
+    
+    }
+}
+
+//optimised approach 
+//As it is sorted array the we do binary search
+//TC - O(Log N)
+
+
